@@ -15,4 +15,5 @@ __vs__
 * Create the detail pane
   * Install specific version
   * Install same version to other projects in solution
-  * Show dependencies
+  * Show dependencies of selected package
+  * Show packages dependent on selected package
