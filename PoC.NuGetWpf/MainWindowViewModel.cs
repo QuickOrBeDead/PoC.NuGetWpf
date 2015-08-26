@@ -25,8 +25,18 @@ namespace PoC.NuGetWpf
             });
             Load.ThrownExceptions.Subscribe(ex => Console.WriteLine("Error occurred: {0}", ex.ToString()));
 
-            Load.Select(x => new ReactiveList<PackageCardViewModel>(x.Select(p => new PackageCardViewModel(p))))
+            Load.Select(x => new ReactiveList<PackageCardViewModel>(x.Select(GetPackageCardViewModel)))
                 .ToProperty(this, x => x.Packages, out _packages, new ReactiveList<PackageCardViewModel>());
+
+            _random = new Random();
+        }
+
+        private PackageCardViewModel GetPackageCardViewModel(IPackage pacakge)
+        {
+            var isInstalled = _random.Next(1, 10)%2 == 0;
+            return isInstalled
+                ? (PackageCardViewModel)new InstalledPackageCardViewModel(pacakge)
+                : (PackageCardViewModel)new GalleryPackageCardViewModel(pacakge);
         }
 
         readonly IPackageRepository _repo;
@@ -36,6 +46,8 @@ namespace PoC.NuGetWpf
         public ReactiveList<PackageCardViewModel> Packages => _packages.Value;
 
         string _filter;
+        private Random _random;
+
         public string Filter
         {
             get { return _filter; }

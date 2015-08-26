@@ -1,12 +1,27 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 using ReactiveUI;
 
 namespace PoC.NuGetWpf
 {
-    public partial class PackageCardView : UserControl, IViewFor<PackageCardViewModel>
+    /// <summary>
+    /// Interaction logic for InstalledPackageCardView.xaml
+    /// </summary>
+    public partial class InstalledPackageCardView : UserControl, IViewFor<InstalledPackageCardViewModel>
     {
-        public PackageCardView()
+        public InstalledPackageCardView()
         {
             InitializeComponent();
 
@@ -22,16 +37,16 @@ namespace PoC.NuGetWpf
         object IViewFor.ViewModel
         {
             get { return ViewModel; }
-            set { ViewModel = (PackageCardViewModel)value; }
+            set { ViewModel = (InstalledPackageCardViewModel)value; }
         }
 
-        public PackageCardViewModel ViewModel
+        public InstalledPackageCardViewModel ViewModel
         {
-            get { return (PackageCardViewModel)GetValue(ViewModelProperty); }
+            get { return (InstalledPackageCardViewModel)GetValue(ViewModelProperty); }
             set { SetValue(ViewModelProperty, value); }
         }
 
         public static readonly DependencyProperty ViewModelProperty =
-            DependencyProperty.Register("ViewModel", typeof(PackageCardViewModel), typeof(PackageCardView));
+            DependencyProperty.Register("ViewModel", typeof(InstalledPackageCardViewModel), typeof(InstalledPackageCardView));
     }
 }

@@ -64,5 +64,9 @@
         <Style x:Key="IconArrowCircleUp" TargetType="TextBlock" BasedOn="{StaticResource IconFont}">
             <Setter Property="Text" Value="&#xf01b;"/>
         </Style>
+
+        <Style x:Key="IconDownload" TargetType="TextBlock" BasedOn="{StaticResource IconFont}">
+            <Setter Property="Text" Value="&#xf019;"/>
+        </Style>
     </Application.Resources>
 </Application>
