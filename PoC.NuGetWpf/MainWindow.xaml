@@ -1,0 +1,19 @@
+﻿<Window x:Class="PoC.NuGetWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:st="clr-namespace:AutoGrid;assembly=SpicyTaco.AutoGrid"
+        Title="NuGet Package Manager" Height="750" Width="625">
+    
+    <st:AutoGrid Rows="Auto,*" Columns="*">
+        
+        <st:AutoGrid Columns="*,Auto" ChildMargin="5" Margin="5">
+            <TextBox x:Name="Filter"/>
+            <Button x:Name="Search" Content="Search"/>
+        </st:AutoGrid>
+        
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <ItemsControl x:Name="Packages" />
+        </ScrollViewer>
+        
+    </st:AutoGrid>
+</Window>
