@@ -2,7 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:st="clr-namespace:AutoGrid;assembly=SpicyTaco.AutoGrid"
-        Title="NuGet Package Manager" Height="750" Width="625">
+        xmlns:rx="clr-namespace:ReactiveUI;assembly=ReactiveUI"
+        Title="NuGet Package Manager" Height="750" Width="650">
     
     <st:AutoGrid Rows="Auto,*" Columns="*">
         
@@ -10,10 +11,36 @@
             <TextBox x:Name="Filter"/>
             <Button x:Name="Search" Content="Search"/>
         </st:AutoGrid>
-        
-        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-            <ItemsControl x:Name="Packages" />
-        </ScrollViewer>
-        
+
+        <ListBox x:Name="Packages" 
+                 HorizontalContentAlignment="Stretch"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Grid>
+                                    <Rectangle Fill="DodgerBlue" 
+                                               Margin="{StaticResource SpacingTight}"
+                                               Width="4" 
+                                               HorizontalAlignment="Left"/>
+                                    <Border BorderThickness="0 1 1 1" 
+                                            Margin="{StaticResource SpacingTight}"
+                                            BorderBrush="DimGray">
+                                        <rx:ViewModelViewHost ViewModel="{Binding}"
+                                                              Margin="2 1 1 1" 
+                                                              HorizontalAlignment="Stretch"
+                                                              HorizontalContentAlignment="Stretch"/>
+                                    </Border>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+
+
     </st:AutoGrid>
 </Window>

@@ -6,9 +6,6 @@
              xmlns:local="clr-namespace:PoC.NuGetWpf"
              xmlns:st="http://schemas.spicytaco.io/"
              mc:Ignorable="d" 
-             Background="White"
-             BorderBrush="DodgerBlue"
-             BorderThickness="0,0,0,1"
              d:DesignHeight="150" d:DesignWidth="550"
              d:DataContext="{d:DesignInstance Type={x:Type local:GalleryPackageCardViewModel}}">
     

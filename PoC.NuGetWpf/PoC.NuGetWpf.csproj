@@ -167,6 +167,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PackageDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainWindowViewModel.cs" />
@@ -174,6 +178,9 @@
       <DependentUpon>GalleryPackageCardView.xaml</DependentUpon>
     </Compile>
     <Compile Include="PackageCardViewModel.cs" />
+    <Compile Include="PackageDetailsView.xaml.cs">
+      <DependentUpon>PackageDetailsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
