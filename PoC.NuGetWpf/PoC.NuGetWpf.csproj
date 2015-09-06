@@ -150,6 +150,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="InstalledPackageCardView.xaml.cs">
       <DependentUpon>InstalledPackageCardView.xaml</DependentUpon>
     </Compile>
