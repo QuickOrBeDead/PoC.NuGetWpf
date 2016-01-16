@@ -14,6 +14,7 @@ namespace PoC.NuGetWpf
             _repo = PackageRepositoryFactory.Default.CreateRepository("https://www.nuget.org/api/v2/");
             Load = ReactiveCommand.CreateAsyncObservable(SearchImpl);
             Load.ThrownExceptions.Subscribe(ex => Console.WriteLine("Error occurred: {0}", ex.ToString()));
+            Load.IsExecuting.ToProperty(this, x => x.IsBusy, out _isBusy);
 
             Load.Select(x => new List<PackageCardViewModel>(x.Select(GetPackageCardViewModel)).AsReadOnly())
                 .ToProperty(this, x => x.Packages, out _packages, new List<PackageCardViewModel>().AsReadOnly());
@@ -54,5 +55,8 @@ namespace PoC.NuGetWpf
             get { return _filter; }
             set { this.RaiseAndSetIfChanged(ref _filter, value); }
         }
+
+        readonly ObservableAsPropertyHelper<bool> _isBusy;
+        public bool IsBusy => _isBusy.Value;
     }
 }
