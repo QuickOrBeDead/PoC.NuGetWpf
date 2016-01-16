@@ -12,15 +12,17 @@
             <Button x:Name="Search" Content="Search"/>
         </st:AutoGrid>
 
-        <ListBox x:Name="Packages" 
+        <ListBox x:Name="Packages" SelectionMode="Single" Margin="0" Padding="0" Background="Transparent"
                  HorizontalContentAlignment="Stretch"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="Template">
                         <Setter.Value>
-                            <ControlTemplate>
+                            <ControlTemplate TargetType="ListBoxItem">
                                 <Grid>
+                                    <ContentPresenter Margin="4 1 1 1"/>
                                     <Rectangle Fill="DodgerBlue" 
                                                Margin="{StaticResource SpacingTight}"
                                                Width="4" 
@@ -28,10 +30,6 @@
                                     <Border BorderThickness="0 1 1 1" 
                                             Margin="{StaticResource SpacingTight}"
                                             BorderBrush="DimGray">
-                                        <rx:ViewModelViewHost ViewModel="{Binding}"
-                                                              Margin="2 1 1 1" 
-                                                              HorizontalAlignment="Stretch"
-                                                              HorizontalContentAlignment="Stretch"/>
                                     </Border>
                                 </Grid>
                             </ControlTemplate>
