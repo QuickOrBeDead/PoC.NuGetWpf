@@ -9,9 +9,12 @@ namespace PoC.NuGetWpf
         {
             InitializeComponent();
 
-            this.BindCommand(ViewModel, vm => vm.Load, v => v.Search);
-            this.OneWayBind(ViewModel, vm => vm.Packages, v => v.Packages.ItemsSource);
-            this.Bind(ViewModel, vm => vm.Filter, v => v.Filter.Text);
+            this.WhenActivated(d =>
+            {
+                d(this.BindCommand(ViewModel, vm => vm.Load, v => v.Search));
+                d(this.OneWayBind(ViewModel, vm => vm.Packages, v => v.Packages.ItemsSource));
+                d(this.Bind(ViewModel, vm => vm.Filter, v => v.Filter.Text));
+            });
 
             ViewModel = new MainWindowViewModel();
         }

@@ -1,9 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoC.NuGetWpf", "PoC.NuGetWpf\PoC.NuGetWpf.csproj", "{7D961A88-447F-42CB-A249-E321D9909C5F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{F06CB646-4551-4C6F-9F20-9BED7F227EEF}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		nuget-left-pane-real.PNG = nuget-left-pane-real.PNG
+		nuget-left-pane.PNG = nuget-left-pane.PNG
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

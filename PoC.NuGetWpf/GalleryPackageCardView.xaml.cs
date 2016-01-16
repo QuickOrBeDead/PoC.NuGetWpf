@@ -10,12 +10,16 @@ namespace PoC.NuGetWpf
         {
             InitializeComponent();
 
-            this.Bind(ViewModel, vm => vm.Title, v => v.Title.Text);
-            this.Bind(ViewModel, vm => vm.Description, v => v.Description.Text);
-            this.Bind(ViewModel, vm => vm.DownloadCount, v => v.DownloadCount.Text);
-            this.Bind(ViewModel, vm => vm.PublishedDate, v => v.PublishedDate.Text);
-            this.Bind(ViewModel, vm => vm.Authors, v => v.Authors.Text);
-            this.Bind(ViewModel, vm => vm.LatestVersion, v => v.LatestVersion.Text);
+            this.WhenActivated(d =>
+            {
+                d(this.Bind(ViewModel, vm => vm.Title, v => v.Title.Text));
+                d(this.Bind(ViewModel, vm => vm.Description, v => v.Description.Text));
+                d(this.Bind(ViewModel, vm => vm.DownloadCount, v => v.DownloadCount.Text));
+                d(this.Bind(ViewModel, vm => vm.PublishedDate, v => v.PublishedDate.Text));
+                d(this.Bind(ViewModel, vm => vm.Authors, v => v.Authors.Text));
+                d(this.Bind(ViewModel, vm => vm.LatestVersion, v => v.LatestVersion.Text));
+            });
+            
         }
 
         object IViewFor.ViewModel
