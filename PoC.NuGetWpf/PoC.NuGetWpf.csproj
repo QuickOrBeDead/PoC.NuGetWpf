@@ -154,11 +154,11 @@
     <Compile Include="InstalledPackageCardView.xaml.cs">
       <DependentUpon>InstalledPackageCardView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Logging\ConsoleLog.cs" />
-    <Compile Include="Logging\ILog.cs" />
-    <Compile Include="Logging\Log.cs" />
-    <Compile Include="Logging\LogExtensions.cs" />
-    <Compile Include="Logging\NullLog.cs" />
+    <Compile Include="Infrastructure\ConsoleLog.cs" />
+    <Compile Include="Infrastructure\ILog.cs" />
+    <Compile Include="Infrastructure\Log.cs" />
+    <Compile Include="Infrastructure\LogExtensions.cs" />
+    <Compile Include="Infrastructure\NullLog.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

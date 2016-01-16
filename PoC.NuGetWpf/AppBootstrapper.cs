@@ -1,11 +1,15 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Reflection;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using PoC.NuGetWpf.Infrastructure;
 using ReactiveUI;
 using Splat;
 
@@ -44,12 +48,17 @@ namespace PoC.NuGetWpf
             var fileVersion = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
             var productVersion = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion;
             var principal = WindowsIdentity.GetCurrent().IfNotNull(x => x.Name, "[Unknown]");
+            var ipAddress = Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork);
+            var machineName = String.Format("{0} ({1})", Environment.MachineName, ipAddress);
+            var windowsVersion = String.Format("{0} {1}", Environment.OSVersion, Environment.Is64BitOperatingSystem ? "64bit" : "32bit");
 
             this.Log().Info("Assembly location: {0}", assemblyLocation);
             this.Log().Info(" Assembly version: {0}", assemblyVersion);
             this.Log().Info("     File version: {0}", fileVersion);
             this.Log().Info("  Product version: {0}", productVersion);
             this.Log().Info("       Running as: {0}", principal);
+            this.Log().Info("     Network Host: {0}", machineName);
+            this.Log().Info("  Windows Version: {0}", windowsVersion);
         }
 
         private static string GetAssemblyDirectory()
