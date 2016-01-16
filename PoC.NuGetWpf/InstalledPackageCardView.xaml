@@ -14,7 +14,8 @@
         <!-- Header -->
         <st:AutoGrid Columns="*,Auto,Auto" ChildMargin="5">
             <TextBlock Style="{StaticResource Title}">
-                <TextBlock Style="{StaticResource IconArchive}" />
+                <!--<TextBlock Style="{StaticResource IconArchive}" />-->
+                <Image x:Name="Icon" Width="24" Height="24" RenderOptions.BitmapScalingMode="HighQuality" />
                 <TextBlock x:Name="Title" Text="Entity Framework" />
             </TextBlock>
             <TextBlock Style="{StaticResource Muted}">

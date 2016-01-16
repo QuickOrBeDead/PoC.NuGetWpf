@@ -10,15 +10,18 @@ namespace PoC.NuGetWpf
         {
             InitializeComponent();
 
+            var imageProvider = new ImageProvider();
+
             this.WhenActivated(d =>
             {
-                d(this.Bind(ViewModel, vm => vm.Title, v => v.Title.Text));
-                d(this.Bind(ViewModel, vm => vm.Description, v => v.Description.Text));
-                d(this.Bind(ViewModel, vm => vm.DownloadCount, v => v.DownloadCount.Text));
-                d(this.Bind(ViewModel, vm => vm.PublishedDate, v => v.PublishedDate.Text));
-                d(this.Bind(ViewModel, vm => vm.Authors, v => v.Authors.Text));
-                d(this.Bind(ViewModel, vm => vm.LatestVersion, v => v.LatestVersion.Text));
-                d(this.Bind(ViewModel, vm => vm.InstalledVersion, v => v.InstalledVersion.Text));
+                d(this.OneWayBind(ViewModel, vm => vm.Title, v => v.Title.Text));
+                d(this.OneWayBind(ViewModel, vm => vm.Description, v => v.Description.Text));
+                d(this.OneWayBind(ViewModel, vm => vm.DownloadCount, v => v.DownloadCount.Text));
+                d(this.OneWayBind(ViewModel, vm => vm.PublishedDate, v => v.PublishedDate.Text));
+                d(this.OneWayBind(ViewModel, vm => vm.Authors, v => v.Authors.Text));
+                d(this.OneWayBind(ViewModel, vm => vm.LatestVersion, v => v.LatestVersion.Text));
+                d(this.OneWayBind(ViewModel, vm => vm.InstalledVersion, v => v.InstalledVersion.Text));
+                d(this.OneWayBind(ViewModel, vm => vm.IconUrl, v => v.Icon.Source, uri => imageProvider.GetIcon(uri)));
             });
         }
 
