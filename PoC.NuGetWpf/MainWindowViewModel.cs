@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using NuGet;
 using ReactiveUI;
 
@@ -13,22 +12,24 @@ namespace PoC.NuGetWpf
         public MainWindowViewModel()
         {
             _repo = PackageRepositoryFactory.Default.CreateRepository("https://www.nuget.org/api/v2/");
-            Load = ReactiveCommand.CreateAsyncTask(_ =>
-            {
-                return Task.Run(() => _repo
-                    .GetPackages()
+            Load = ReactiveCommand.CreateAsyncObservable(SearchImpl);
+            Load.ThrownExceptions.Subscribe(ex => Console.WriteLine("Error occurred: {0}", ex.ToString()));
+
+            Load.Select(x => new List<PackageCardViewModel>(x.Select(GetPackageCardViewModel)).AsReadOnly())
+                .ToProperty(this, x => x.Packages, out _packages, new List<PackageCardViewModel>().AsReadOnly());
+
+            _random = new Random();
+        }
+
+        IObservable<IEnumerable<IPackage>> SearchImpl(object _)
+        {
+            return Observable.Start(() => 
+                _repo.GetPackages()
                     .Where(p => String.IsNullOrWhiteSpace(Filter) || p.Title.Contains(Filter) || p.Id.Contains(Filter))
                     .Where(p => p.IsLatestVersion)
                     .OrderByDescending(p => p.DownloadCount)
                     .Take(10)
                     .AsEnumerable());
-            });
-            Load.ThrownExceptions.Subscribe(ex => Console.WriteLine("Error occurred: {0}", ex.ToString()));
-
-            Load.Select(x => new ReactiveList<PackageCardViewModel>(x.Select(GetPackageCardViewModel)))
-                .ToProperty(this, x => x.Packages, out _packages, new ReactiveList<PackageCardViewModel>());
-
-            _random = new Random();
         }
 
         private PackageCardViewModel GetPackageCardViewModel(IPackage pacakge)
@@ -42,11 +43,11 @@ namespace PoC.NuGetWpf
         readonly IPackageRepository _repo;
         public ReactiveCommand<IEnumerable<IPackage>> Load { get; }
 
-        readonly ObservableAsPropertyHelper<ReactiveList<PackageCardViewModel>> _packages;
-        public ReactiveList<PackageCardViewModel> Packages => _packages.Value;
+        readonly ObservableAsPropertyHelper<IReadOnlyList<PackageCardViewModel>> _packages;
+        public IReadOnlyList<PackageCardViewModel> Packages => _packages.Value;
 
         string _filter;
-        private Random _random;
+        readonly Random _random;
 
         public string Filter
         {
