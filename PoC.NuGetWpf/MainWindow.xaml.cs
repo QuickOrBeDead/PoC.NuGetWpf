@@ -9,13 +9,15 @@ namespace PoC.NuGetWpf
         {
             InitializeComponent();
 
-            this.WhenActivated(d =>
+            this.WhenActivated(async d =>
             {
                 d(this.BindCommand(ViewModel, vm => vm.Load, v => v.Search));
                 d(this.OneWayBind(ViewModel, vm => vm.Packages, v => v.Packages.ItemsSource));
                 d(this.Bind(ViewModel, vm => vm.Filter, v => v.Filter.Text));
                 d(this.OneWayBind(ViewModel, vm => vm.IsBusy, v => v.IsBusy.Visibility));
                 d(this.OneWayBind(ViewModel, vm => vm.IsBusy, v => v.Packages.Visibility, b => b ? Visibility.Collapsed : Visibility.Visible));
+
+                await ViewModel.Load.ExecuteAsyncTask();
             });
 
             ViewModel = new MainWindowViewModel();
