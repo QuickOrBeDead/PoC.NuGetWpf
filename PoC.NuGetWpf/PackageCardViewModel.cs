@@ -23,6 +23,7 @@ namespace PoC.NuGetWpf
 
     public class PackageCardViewModel : ReactiveObject
     {
+        public Uri IconUrl { get; }
         public string LatestVersion { get; }
         public string DownloadCount { get; }
         public string PublishedDate { get; }
@@ -38,6 +39,7 @@ namespace PoC.NuGetWpf
             PublishedDate = package.Published.GetValueOrDefault(DateTimeOffset.Now).LocalDateTime.ToShortDateString();
             DownloadCount = String.Format("{0:N0}", package.DownloadCount);
             LatestVersion = package.Version.ToString();
+            IconUrl = package.IconUrl ?? new Uri("https://www.nuget.org/Content/Images/packageDefaultIcon.png", UriKind.Absolute);
         }
     }
 }
