@@ -72,6 +72,10 @@
       <HintPath>..\packages\reactiveui-core.6.5.0\lib\Net45\ReactiveUI.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ReactiveUI.Events, Version=6.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\reactiveui-events.6.5.0\lib\net45\ReactiveUI.Events.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Simple.OData.Client.Core, Version=4.13.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Simple.OData.V4.Client.4.13.0\lib\portable-net45+win8+wp8+wpa81\Simple.OData.Client.Core.dll</HintPath>
       <Private>True</Private>
@@ -137,6 +141,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FirstModalView.xaml.cs">
+      <DependentUpon>FirstModalView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FirstModalViewModel.cs" />
+    <Compile Include="ModalController.cs" />
+    <Compile Include="ReactiveModal.cs" />
+    <Compile Include="UIElementExtensions.cs" />
+    <Page Include="FirstModalView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="InstalledPackageCardView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -178,6 +193,8 @@
     <Compile Include="GalleryPackageCardView.xaml.cs">
       <DependentUpon>GalleryPackageCardView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ModalContentCommands.cs" />
+    <Compile Include="ModalContentPresenter.cs" />
     <Compile Include="PackageCardViewModel.cs" />
     <Compile Include="PackageDetailsView.xaml.cs">
       <DependentUpon>PackageDetailsView.xaml</DependentUpon>

@@ -12,6 +12,7 @@ namespace PoC.NuGetWpf
     {
         public MainWindowViewModel()
         {
+            ModalController = new ModalController();
             _repo = PackageRepositoryFactory.Default.CreateRepository("https://www.nuget.org/api/v2/");
             _random = new Random();
             Page = 0;
@@ -37,6 +38,9 @@ namespace PoC.NuGetWpf
                 Page = Page - 1;
                 return Load.ExecuteAsyncTask().ToObservable();
             });
+
+            ShowDialog = ReactiveCommand.Create();
+            ShowDialog.Subscribe(_ => ModalController.ShowModal(new FirstModalViewModel()));
         }
 
         IObservable<IEnumerable<IPackage>> SearchImpl(int page, int pageSize)
@@ -62,10 +66,12 @@ namespace PoC.NuGetWpf
         string _filter;
         readonly Random _random;
         readonly IPackageRepository _repo;
+        public IModalController ModalController { get; }
 
         public ReactiveCommand<IEnumerable<IPackage>> Load { get; }
         public ReactiveCommand<IEnumerable<IPackage>> Previous { get; }
         public ReactiveCommand<IEnumerable<IPackage>> Next { get; }
+        public ReactiveCommand<object> ShowDialog { get; }
 
         readonly ObservableAsPropertyHelper<IReadOnlyList<PackageCardViewModel>> _packages;
         public IReadOnlyList<PackageCardViewModel> Packages => _packages.Value;
@@ -89,7 +95,7 @@ namespace PoC.NuGetWpf
             get { return _pageSize; }
             set { this.RaiseAndSetIfChanged(ref _pageSize, value); }
         }
-
+        
         readonly ObservableAsPropertyHelper<bool> _isBusy;
         public bool IsBusy => _isBusy.Value;
     }

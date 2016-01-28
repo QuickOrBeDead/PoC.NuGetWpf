@@ -13,11 +13,10 @@
         
         <!-- Header -->
         <st:AutoGrid Columns="*,Auto,Auto" ChildMargin="5">
-            <TextBlock Style="{StaticResource Title}">
-                <!--<TextBlock Style="{StaticResource IconArchive}" />-->
-                <Image x:Name="Icon" Width="24" Height="24" RenderOptions.BitmapScalingMode="HighQuality" />
-                <TextBlock x:Name="Title" Text="Entity Framework" />
-            </TextBlock>
+            <StackPanel Orientation="Horizontal" Margin="0">
+                <Image x:Name="Icon" Width="24" Height="24" Margin="5" RenderOptions.BitmapScalingMode="HighQuality" />
+                <TextBlock x:Name="Title" Text="Entity Framework" Margin="5" Style="{StaticResource Title}" />
+            </StackPanel>
             <TextBlock>
                 <TextBlock Style="{StaticResource IconCloudDownload}" />
                 <TextBlock x:Name="DownloadCount" Text="12,182,716" Margin="0" />

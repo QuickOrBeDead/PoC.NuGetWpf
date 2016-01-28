@@ -103,6 +103,7 @@ namespace PoC.NuGetWpf
             dependencyResolver.RegisterConstant(this, typeof(IScreen));
 
             dependencyResolver.Register(() => new MainWindow(), typeof(IViewFor<MainWindowViewModel>));
+            dependencyResolver.Register(() => new FirstModalView(), typeof(IViewFor<FirstModalViewModel>));
             dependencyResolver.Register(() => new GalleryPackageCardView(), typeof(IViewFor<GalleryPackageCardViewModel>));
             dependencyResolver.Register(() => new InstalledPackageCardView(), typeof(IViewFor<InstalledPackageCardViewModel>));
         }

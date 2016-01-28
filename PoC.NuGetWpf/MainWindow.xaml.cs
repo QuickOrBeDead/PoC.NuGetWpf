@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Reactive.Linq;
+using System.Windows;
+using System.Windows.Controls;
 using ReactiveUI;
 
 namespace PoC.NuGetWpf
@@ -9,7 +12,7 @@ namespace PoC.NuGetWpf
         {
             InitializeComponent();
 
-            this.WhenActivated(async d =>
+            this.WhenActivated(d =>
             {
                 d(this.Bind(ViewModel, vm => vm.Filter, v => v.Filter.Text));
                 d(this.BindCommand(ViewModel, vm => vm.Load, v => v.Search));
@@ -17,10 +20,21 @@ namespace PoC.NuGetWpf
                 d(this.OneWayBind(ViewModel, vm => vm.IsBusy, v => v.IsBusy.Visibility));
                 d(this.OneWayBind(ViewModel, vm => vm.IsBusy, v => v.Packages.Visibility, b => b ? Visibility.Collapsed : Visibility.Visible));
 
+                d(this.OneWayBind(ViewModel, vm => vm.ModalController.Modal, v => v.ModalHost.ViewModel));
+
                 d(this.BindCommand(ViewModel, vm => vm.Next, v => v.Next));
                 d(this.BindCommand(ViewModel, vm => vm.Previous, v => v.Previous));
 
-                await ViewModel.Load.ExecuteAsyncTask();
+                d(this.BindCommand(ViewModel, vm => vm.ShowDialog, v => v.ShowDialog));
+
+                //await ViewModel.Load.ExecuteAsyncTask();
+                d(this.WhenAnyValue(x => x.ViewModel.ModalController.Modal)
+                    .Where(modal => modal != null)
+                    .Subscribe(x => ModalPresenter.ShowModalContent()));
+
+                d(this.WhenAnyValue(x => x.ViewModel.ModalController.Modal)
+                    .Where(modal => modal == null)
+                    .Subscribe(_ => ModalPresenter.HideModalContent()));
             });
 
             ViewModel = new MainWindowViewModel();
