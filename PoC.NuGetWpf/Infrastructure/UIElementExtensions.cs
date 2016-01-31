@@ -2,7 +2,7 @@ using System;
 using System.Windows;
 using System.Windows.Media.Animation;
 
-namespace PoC.NuGetWpf
+namespace PoC.NuGetWpf.Infrastructure
 {
     public static class UIElementExtensions
     {

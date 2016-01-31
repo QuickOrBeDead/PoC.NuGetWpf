@@ -16,7 +16,7 @@
 
 using System.Windows.Input;
 
-namespace PoC.NuGetWpf
+namespace PoC.NuGetWpf.Infrastructure
 {
     /// <summary>
     /// Defines common commands for use with the ModalContentPresenter.

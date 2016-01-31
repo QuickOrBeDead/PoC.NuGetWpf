@@ -1,28 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using ReactiveUI;
 
 namespace PoC.NuGetWpf
 {
-    /// <summary>
-    /// Interaction logic for PackageDetailsView.xaml
-    /// </summary>
-    public partial class PackageDetailsView : UserControl
+    public partial class PackageDetailsView : UserControl, IViewFor<PackageDetailsViewModel>
     {
         public PackageDetailsView()
         {
             InitializeComponent();
+
+            this.WhenActivated(d =>
+            {
+                d(this.OneWayBind(ViewModel, vm => vm.SelectedPackage, v => v.PackageCard.ViewModel));
+            });
+        }
+
+        public PackageDetailsViewModel ViewModel
+        {
+            get { return (PackageDetailsViewModel) GetValue(ViewModelProperty); }
+            set { SetValue(ViewModelProperty, value); }
+        }
+
+        public static readonly DependencyProperty ViewModelProperty =
+            DependencyProperty.Register("ViewModel", typeof (PackageDetailsViewModel), typeof (PackageDetailsView), new PropertyMetadata(null));
+
+        object IViewFor.ViewModel
+        {
+            get { return ViewModel; }
+            set { ViewModel = (PackageDetailsViewModel) value; }
         }
     }
 }

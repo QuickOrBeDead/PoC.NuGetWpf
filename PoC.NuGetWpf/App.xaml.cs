@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using PoC.NuGetWpf.Infrastructure;
 using Splat;
 
 namespace PoC.NuGetWpf

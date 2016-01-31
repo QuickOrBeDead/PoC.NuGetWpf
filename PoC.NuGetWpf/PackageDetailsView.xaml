@@ -5,12 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PoC.NuGetWpf"
              xmlns:st="http://schemas.spicytaco.io/"
+             xmlns:reactiveUi="clr-namespace:ReactiveUI;assembly=ReactiveUI"
              mc:Ignorable="d" 
              Background="White"
              d:DesignHeight="500" d:DesignWidth="500">
     <st:AutoGrid Columns="*" ChildMargin="5">
         <Border BorderBrush="DodgerBlue" BorderThickness="1">
-            <local:InstalledPackageCardView/>
+            <reactiveUi:ViewModelViewHost x:Name="PackageCard">
+                <local:InstalledPackageCardView/>
+            </reactiveUi:ViewModelViewHost>
         </Border>
         <WrapPanel>
             <Button Margin="{StaticResource SpacingTight}">

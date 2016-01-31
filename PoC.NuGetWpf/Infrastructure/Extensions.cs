@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
 
-namespace PoC.NuGetWpf
+namespace PoC.NuGetWpf.Infrastructure
 {
     public static class Extensions
     {

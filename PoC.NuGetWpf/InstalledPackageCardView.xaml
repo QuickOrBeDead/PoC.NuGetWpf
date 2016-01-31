@@ -12,10 +12,10 @@
     <st:AutoGrid Rows="Auto,*,Auto" Columns="*" Margin="10">
 
         <!-- Header -->
-        <st:AutoGrid Columns="*,Auto,Auto" ChildMargin="5">
+        <st:AutoGrid Columns="*,Auto,Auto" ChildMargin="{StaticResource Spacing}">
             <StackPanel Orientation="Horizontal" Margin="0">
-                <Image x:Name="Icon" Width="24" Height="24" Margin="5" RenderOptions.BitmapScalingMode="HighQuality" />
-                <TextBlock x:Name="Title" Text="Entity Framework" Margin="5" Style="{StaticResource Title}" />
+                <Image x:Name="Icon" Width="24" Height="24" Margin="{StaticResource Spacing}" RenderOptions.BitmapScalingMode="HighQuality" />
+                <TextBlock x:Name="Title" Text="Entity Framework" Margin="{StaticResource Spacing}" Style="{StaticResource Title}" />
             </StackPanel>
             <TextBlock Style="{StaticResource Muted}">
                 <TextBlock Style="{StaticResource IconCloudDownload}" />
@@ -28,12 +28,12 @@
         </st:AutoGrid>
 
         <!-- Description -->
-        <TextBlock x:Name="Description" MaxHeight="60" Margin="5" Style="{StaticResource Muted}"
+        <TextBlock x:Name="Description" MaxHeight="60" Margin="{StaticResource Spacing}" Style="{StaticResource Muted}"
                    Text="Entity Framework is Microsoft's recommended data access technology for new applications."/>
 
         <!-- Footer -->
         <st:AutoGrid Columns="*,Auto,Auto">
-            <TextBlock x:Name="Authors" Text="Microsoft" Style="{StaticResource SubHeading}" Margin="5"/>
+            <TextBlock x:Name="Authors" Text="Microsoft" Style="{StaticResource SubHeading}" Margin="{StaticResource Spacing}"/>
             <Button Margin="0,0,5,0">
                 <TextBlock>
                     <TextBlock Style="{StaticResource IconTrash}" />

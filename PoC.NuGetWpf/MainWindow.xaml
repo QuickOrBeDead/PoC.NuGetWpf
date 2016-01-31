@@ -4,13 +4,14 @@
         xmlns:st="clr-namespace:AutoGrid;assembly=SpicyTaco.AutoGrid"
         xmlns:nuGetWpf="clr-namespace:PoC.NuGetWpf"
         xmlns:reactiveUi="clr-namespace:ReactiveUI;assembly=ReactiveUI"
+        xmlns:infrastructure="clr-namespace:PoC.NuGetWpf.Infrastructure"
         Title="NuGet Package Manager" Height="850" Width="700">
 
-    <nuGetWpf:ModalContentPresenter x:Name="ModalPresenter" OverlayBrush="#C01B1F26">
+    <infrastructure:ModalContentPresenter x:Name="ModalPresenter" OverlayBrush="#C01B1F26">
     
         <st:AutoGrid Rows="Auto,*" Columns="*">
-        
-            <st:AutoGrid Columns="*,Auto,Auto" ChildMargin="5" Margin="5">
+
+            <st:AutoGrid Columns="*,Auto,Auto" ChildMargin="{StaticResource Spacing}" Margin="{StaticResource Spacing}">
                 <TextBox x:Name="Filter"/>
                 <Button x:Name="Search" Content="Search"/>
                 <Button x:Name="ShowDialog" Content="Show Dialog"/>
@@ -61,14 +62,14 @@
 
         </st:AutoGrid>
         
-        <nuGetWpf:ModalContentPresenter.ModalContent>
+        <infrastructure:ModalContentPresenter.ModalContent>
             <Border Background="White" CornerRadius="5" Margin="70,50" MaxHeight="350" MaxWidth="500">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="35" ShadowDepth="8" Direction="270" Color="#1B1F26" Opacity="0.4"/>
                 </Border.Effect>
-                <reactiveUi:ViewModelViewHost x:Name="ModalHost" Margin="5"/>
+                <reactiveUi:ViewModelViewHost x:Name="ModalHost" Margin="{StaticResource Spacing}"/>
             </Border>
-        </nuGetWpf:ModalContentPresenter.ModalContent>
+        </infrastructure:ModalContentPresenter.ModalContent>
 
-    </nuGetWpf:ModalContentPresenter>
+    </infrastructure:ModalContentPresenter>
 </Window>

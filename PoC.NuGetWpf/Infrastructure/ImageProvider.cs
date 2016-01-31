@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Reactive.Linq;
 using System.Windows.Media.Imaging;
 
-namespace PoC.NuGetWpf
+namespace PoC.NuGetWpf.Infrastructure
 {
     public class ImageProvider
     {

@@ -1,4 +1,5 @@
 ﻿using System;
+using PoC.NuGetWpf.Infrastructure;
 using ReactiveUI;
 
 namespace PoC.NuGetWpf

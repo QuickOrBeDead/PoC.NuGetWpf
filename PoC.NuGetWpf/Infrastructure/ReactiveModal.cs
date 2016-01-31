@@ -4,7 +4,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using ReactiveUI;
 
-namespace PoC.NuGetWpf
+namespace PoC.NuGetWpf.Infrastructure
 {
     public abstract class ReactiveModal : ReactiveObject, IActivatable
     {

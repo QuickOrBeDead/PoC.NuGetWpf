@@ -4,11 +4,13 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using NuGet;
+using PoC.NuGetWpf.Infrastructure;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace PoC.NuGetWpf
 {
-    public class MainWindowViewModel : ReactiveObject
+    public class MainWindowViewModel : ReactiveViewModel
     {
         public MainWindowViewModel()
         {
@@ -18,44 +20,54 @@ namespace PoC.NuGetWpf
             Page = 0;
             PageSize = 25;
 
-            Load = ReactiveCommand.CreateAsyncObservable(_ => SearchImpl(Page, PageSize));
-            Load.ThrownExceptions.Subscribe(ex => Console.WriteLine("Error occurred: {0}", ex.ToString()));
-            Load.IsExecuting.ToProperty(this, x => x.IsBusy, out _isBusy);
+            Load = ReactiveCommand.CreateAsyncObservable(_ => SearchImpl(Page, PageSize), RxApp.TaskpoolScheduler);
+            Load.ThrownExceptions.Subscribe(ex => this.Log().Error($"Error occurred: {ex.ToString()}"));
+            Load.IsExecuting.ObserveOn(RxApp.MainThreadScheduler).ToPropertyEx(this, x => x.IsBusy);
 
             Load.ToReadOnlyList(GetPackageCardViewModel)
-                .ToProperty(this, x => x.Packages, out _packages, new List<PackageCardViewModel>().AsReadOnly());
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .ToPropertyEx(this, x => x.Packages, new List<PackageCardViewModel>().AsReadOnly());
 
             var canNext = this.WhenAny(x => x.IsBusy, busy => !busy.Value);
             Next = ReactiveCommand.CreateAsyncObservable(canNext, _ =>
             {
                 Page = Page + 1;
-                return Load.ExecuteAsyncTask().ToObservable();
+                return Load.ExecuteAsync();
             });
+            Next.ThrownExceptions.Subscribe(ex => this.Log().Error($"Error occurred: {ex.ToString()}"));
 
             var canPrevious = this.WhenAny(x => x.IsBusy, x => x.Page, (busy, page) => !busy.Value && page.Value > 0);
             Previous = ReactiveCommand.CreateAsyncObservable(canPrevious, _ =>
             {
                 Page = Page - 1;
-                return Load.ExecuteAsyncTask().ToObservable();
+                return Load.ExecuteAsync();
             });
+            Previous.ThrownExceptions.Subscribe(ex => this.Log().Error($"Error occurred: {ex.ToString()}"));
 
             ShowDialog = ReactiveCommand.Create();
             ShowDialog.Subscribe(_ => ModalController.ShowModal(new FirstModalViewModel()));
+
+            this.WhenActivated(d =>
+            {
+                d(Load.ExecuteAsync().Subscribe());
+            });
         }
 
         IObservable<IEnumerable<IPackage>> SearchImpl(int page, int pageSize)
         {
-            return Observable.Start(() => 
-                _repo.GetPackages()
+            return Observable.Defer(() =>
+            {
+                return Observable.Return(_repo.GetPackages()
                     .Where(p => String.IsNullOrWhiteSpace(Filter) || p.Title.Contains(Filter) || p.Id.Contains(Filter))
                     .Where(p => p.IsLatestVersion)
                     .OrderByDescending(p => p.DownloadCount)
-                    .Skip(page * pageSize)
+                    .Skip(page*pageSize)
                     .Take(pageSize)
                     .AsEnumerable());
+            });
         }
 
-        private PackageCardViewModel GetPackageCardViewModel(IPackage pacakge)
+        PackageCardViewModel GetPackageCardViewModel(IPackage pacakge)
         {
             var isInstalled = _random.Next(1, 10)%2 == 0;
             return isInstalled
@@ -63,7 +75,6 @@ namespace PoC.NuGetWpf
                 : (PackageCardViewModel)new GalleryPackageCardViewModel(pacakge);
         }
         
-        string _filter;
         readonly Random _random;
         readonly IPackageRepository _repo;
         public IModalController ModalController { get; }
@@ -72,31 +83,12 @@ namespace PoC.NuGetWpf
         public ReactiveCommand<IEnumerable<IPackage>> Previous { get; }
         public ReactiveCommand<IEnumerable<IPackage>> Next { get; }
         public ReactiveCommand<object> ShowDialog { get; }
-
-        readonly ObservableAsPropertyHelper<IReadOnlyList<PackageCardViewModel>> _packages;
-        public IReadOnlyList<PackageCardViewModel> Packages => _packages.Value;
-
-        public string Filter
-        {
-            get { return _filter; }
-            set { this.RaiseAndSetIfChanged(ref _filter, value); }
-        }
-
-        int _page;
-        public int Page
-        {
-            get { return _page; }
-            set { this.RaiseAndSetIfChanged(ref _page, value); }
-        }
-
-        int _pageSize;
-        public int PageSize
-        {
-            get { return _pageSize; }
-            set { this.RaiseAndSetIfChanged(ref _pageSize, value); }
-        }
         
-        readonly ObservableAsPropertyHelper<bool> _isBusy;
-        public bool IsBusy => _isBusy.Value;
+        [ObservableAsProperty] public IReadOnlyList<PackageCardViewModel> Packages { get; }
+        [ObservableAsProperty] public bool IsBusy { get; }
+
+        [Reactive] public string Filter { get; set; }
+        [Reactive] public int Page { get; set; }
+        [Reactive] public int PageSize { get; set; }
     }
 }

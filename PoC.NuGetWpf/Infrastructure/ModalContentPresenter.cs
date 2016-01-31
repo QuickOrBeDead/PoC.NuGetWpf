@@ -22,7 +22,7 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
 
-namespace PoC.NuGetWpf
+namespace PoC.NuGetWpf.Infrastructure
 {
     /// <summary>
     /// Allows the display of modal content over another piece of content.
