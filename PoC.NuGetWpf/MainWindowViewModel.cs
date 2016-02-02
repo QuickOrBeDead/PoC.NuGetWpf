@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
+using System.Windows.Media;
 using NuGet;
 using PoC.NuGetWpf.Infrastructure;
 using ReactiveUI;
@@ -19,9 +20,10 @@ namespace PoC.NuGetWpf
             _random = new Random();
             Page = 0;
             PageSize = 25;
+            HasError = false;
 
             Load = ReactiveCommand.CreateAsyncObservable(_ => SearchImpl(Page, PageSize), RxApp.TaskpoolScheduler);
-            Load.ThrownExceptions.Subscribe(ex => this.Log().Error($"Error occurred: {ex.ToString()}"));
+            Load.ThrownExceptions.Subscribe(HandleSearchError);
             Load.IsExecuting.ObserveOn(RxApp.MainThreadScheduler).ToPropertyEx(this, x => x.IsBusy);
 
             Load.ToReadOnlyList(GetPackageCardViewModel)
@@ -51,6 +53,12 @@ namespace PoC.NuGetWpf
             {
                 d(Load.ExecuteAsync().Subscribe());
             });
+        }
+
+        void HandleSearchError(Exception ex)
+        {
+            this.Log().Error($"Error occurred: {ex}");
+            HasError = true;
         }
 
         IObservable<IEnumerable<IPackage>> SearchImpl(int page, int pageSize)
@@ -90,5 +98,6 @@ namespace PoC.NuGetWpf
         [Reactive] public string Filter { get; set; }
         [Reactive] public int Page { get; set; }
         [Reactive] public int PageSize { get; set; }
+        [Reactive] public bool HasError { get; set; }
     }
 }
