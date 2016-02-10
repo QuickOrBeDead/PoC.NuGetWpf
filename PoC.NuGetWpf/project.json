@@ -1,0 +1,17 @@
+﻿{
+  "dependencies": {
+    "Fody": "1.29.4",
+    "Humanizer": "2.0.1",
+    "NuGet.Core": "2.10.1",
+    "reactiveui": "6.5.0",
+    "reactiveui-events": "6.5.0",
+    "ReactiveUI.Fody": "1.1.10",
+    "SpicyTaco.AutoGrid": "1.0.9"
+  },
+  "frameworks": {
+    "net46": {}
+  },
+  "runtimes": {
+    "win": {}
+  }
+}
