@@ -64,6 +64,7 @@
     </Compile>
     <Compile Include="FirstModalViewModel.cs" />
     <Compile Include="Infrastructure\AppBootstrapper.cs" />
+    <Compile Include="Infrastructure\AppViewLocator.cs" />
     <Compile Include="Infrastructure\Extensions.cs" />
     <Compile Include="Infrastructure\ImageProvider.cs" />
     <Compile Include="Infrastructure\ModalContentCommands.cs" />

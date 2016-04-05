@@ -99,12 +99,11 @@ namespace PoC.NuGetWpf.Infrastructure
 
         private void RegisterTypesInContainer(IMutableDependencyResolver dependencyResolver)
         {
-            dependencyResolver.RegisterConstant(this, typeof(IScreen));
+            Locator.CurrentMutable.InitializeSplat();
+            Locator.CurrentMutable.InitializeReactiveUI();
 
-            dependencyResolver.Register(() => new MainWindow(), typeof(IViewFor<MainWindowViewModel>));
-            dependencyResolver.Register(() => new FirstModalView(), typeof(IViewFor<FirstModalViewModel>));
-            dependencyResolver.Register(() => new GalleryPackageCardView(), typeof(IViewFor<GalleryPackageCardViewModel>));
-            dependencyResolver.Register(() => new InstalledPackageCardView(), typeof(IViewFor<InstalledPackageCardViewModel>));
+            dependencyResolver.RegisterConstant(this, typeof(IScreen));
+            Locator.CurrentMutable.RegisterLazySingleton(() => new AppViewLocator(), typeof(IViewLocator));
         }
     }
 }
